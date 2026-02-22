@@ -21,7 +21,4 @@ router.delete("/:id", validate.validateId, controller.deleteItem);
 
 
 
-
-
-
 module.exports = router;

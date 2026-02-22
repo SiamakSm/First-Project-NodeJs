@@ -6,7 +6,7 @@ const {
     create,
     remove,
     update
-} = require("../Data/items.data.js");
+} = require("../data/items.data.js");
 const applyQuery = require("../utils/applyQuery.js");
 
 
