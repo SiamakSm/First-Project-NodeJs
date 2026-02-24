@@ -74,3 +74,5 @@ formAdd.addEventListener("submit", async (e) => {
         setMsg(err.message);
     }
 });
+
+loadItems();
