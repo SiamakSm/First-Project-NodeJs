@@ -45,7 +45,7 @@ async function loadItems() {
 async function addItem(name) {
     const res = await fetch(`${API_BASE}/items`, {
         method: "POST",
-        //headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name })
     });
 
