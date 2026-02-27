@@ -8,7 +8,7 @@ const msgEl = document.querySelector("#msg");
 
 function setMsg(text) {
     msgEl.textContent = text || "";
-}
+};
 
 function renderItems(items) {
     listEl.innerHTML = "";
@@ -26,8 +26,8 @@ function renderItems(items) {
 
         li.appendChild(btnDel);
         listEl.appendChild(li);
-    }
-}
+    };
+};
 
 async function loadItems() {
     setMsg("Loading...");
@@ -35,12 +35,12 @@ async function loadItems() {
     const data = await res.json();
     renderItems(data);
     setMsg("");
-}
+};
 
 async function addItem(name) {
     const res = await fetch(`${API_BASE}/items`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        //headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name })
     });
 
@@ -48,7 +48,7 @@ async function addItem(name) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || "Failed to create item");
     }
-}
+};
 
 async function deleteItem(id) {
     const res = await fetch(`${API_BASE}/items/${id}`, { method: "DELETE" });
@@ -57,7 +57,7 @@ async function deleteItem(id) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || "Failed to delete item");
     }
-}
+};
 
 btnLoad.addEventListener("click", loadItems);
 
@@ -74,5 +74,3 @@ formAdd.addEventListener("submit", async (e) => {
         setMsg(err.message);
     }
 });
-
-loadItems();
