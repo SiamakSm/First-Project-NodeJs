@@ -41,3 +41,8 @@ li {
     display: flex;
     justify-content: space-between;
 }
+
+
+body { font-family: Arial, sans-serif; }
+li { margin: 6px 0; }
+button { margin-left: 6px; }

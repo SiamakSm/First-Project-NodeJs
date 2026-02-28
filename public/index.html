@@ -3,22 +3,28 @@
         <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width,initial-scale=1" />
-            <title>Items</title>
+            <title>Progress Traker</title>
             <link rel="stylesheet" href="./style.css" />
         </head>
         <body>
-            <h1>Items</h1>
-
-            <button id="btnLoad">Load</button>
-
-            <h3>Add item</h3>
-            <form id="formAdd">
-                <input id="inputName" placeholder="name" />
+            <h2>Add skill</h2>
+            <form id="skillForm">
+                <input id="titleInput" placeholder="Title (e.g. Node.js)" />
+                <input id="categoryInput" placeholder="Category (e.g. Backend)" />
+                <input id="progressInput" type="number" min="0" max="100" value="0" />
+                <select id="statusInput">
+                    <option value="active">active</option>
+                    <option value="done">done</option>
+                </select>
                 <button type="submit">Add</button>
             </form>
+            
+            <h3>Skills</h3>
+            <button id="loadBtn" type="button">Load</button>
+            <ul id="skillsList"></ul>
+
 
             <p id="msg"></p>
-            <ul id="list"></ul>
 
             <script src="./app.js"></script>
         </body>
