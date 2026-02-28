@@ -25,7 +25,7 @@ function renderItems(items) {
         const btnDel = document.createElement("button");
         btnDel.textContent = "Delete";
         btnDel.addEventListener("click", async () => {
-            await deleteItem(item.id);
+            //await deleteItem(item.id);
             await loadItems();
         });
 
@@ -36,7 +36,7 @@ function renderItems(items) {
 
 async function loadItems() {
     setMsg("Loading...");
-    const res = await fetch(`${API_BASE}/items`);
+    const res = await fetch(`${API_BASE}/skills`);
     const data = await res.json();
     renderItems(data);
     setMsg("");
@@ -56,7 +56,7 @@ async function addItem(name) {
 };
 
 async function deleteItem(id) {
-    const res = await fetch(`${API_BASE}/items/${id}`, { method: "DELETE" });
+    const res = await fetch(`${API_BASE}/skills/${id}`, { method: "DELETE" });
 
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
