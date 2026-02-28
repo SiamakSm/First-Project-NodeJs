@@ -49,7 +49,7 @@ async function updateSkill(req, res, next) {
 
 async function deleteSkill(req, res, next) {
     try {
-        const id = number(req.params.id);
+        const id = Number(req.params.id);
         const deleted = await skillsData.remove(id);
 
         if (!deleted)
