@@ -10,6 +10,7 @@ async function getAll() {
   return rows;
 }
 
+
 // CREATE skill
 async function create({ title, category, progress, status }) {
   const { rows } = await pool.query(
@@ -22,6 +23,7 @@ async function create({ title, category, progress, status }) {
 }
 
 
+// UPDATE skill
 async function update(id, fields) {
   const { title, category, progress, status } = fields;
 
@@ -39,9 +41,15 @@ async function update(id, fields) {
 };
 
 
+// REMOVE skill
 async function remove(id) {
-  const { rows } = await pool.query(
+  try {
+    const { rows } = await pool.query(
     `DELETE FROM skills WHERE id = $1`, [id]);
+    return true;
+  } catch (err) {
+    return false;
+  };
 };
 
 

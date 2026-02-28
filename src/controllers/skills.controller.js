@@ -52,7 +52,7 @@ async function deleteSkill(req, res, next) {
         const id = Number(req.params.id);
         const deleted = await skillsData.remove(id);
 
-        if (!deleted)
+        if (deleted === false)
             return res.status(404).json({ error: "Skill not found" });
 
         res.status(204).send();
