@@ -51,7 +51,7 @@ async function addSkill() {
     const title = titleInput.value.trim();
     const category = categoryInput.value.trim();
     const progress = Number(progressInput.value) || 0;
-    const status = statusInput.value();
+    const status = statusInput.value;
 
     const res = await fetch(`${API_BASE}/skills`, {
         method: "POST",
@@ -79,6 +79,7 @@ async function deleteSkill(id) {
     const res = await fetch(`${API_BASE}/skills/${id}`, { method: "DELETE" });
 
     if (!res.ok && res.status !== 204) {
+        const err = await res.json().catch(() => ({}));
         alert(err.error || "Failed to delete skill");
         return;
     };
@@ -112,5 +113,4 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     await addSkill();
-    await loadSkills();
 });
