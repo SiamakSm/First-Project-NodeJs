@@ -22,22 +22,7 @@ async function getSkills(req, res, next) {
 */
 async function createSkill(req, res, next) {
   try {
-    const { title, category, progress, status } = req.body;
-
-    // Basic validation
-    if (!title || !category) {
-      return res.status(400).json({
-        error: "Title and Category required"
-      });
-    }
-
-    const skill = await skillsData.create({
-      title,
-      category,
-      progress,
-      status
-    });
-
+    const skill = await skillsData.create(req.body);
     res.status(201).json(skill);
   } catch (err) {
     next(err);
@@ -50,7 +35,7 @@ async function createSkill(req, res, next) {
 */
 async function updateSkill(req, res, next) {
   try {
-    const id = Number(req.params.id);
+    const id = req.skillId;
 
     const updated = await skillsData.update(id, req.body);
 
@@ -72,11 +57,11 @@ async function updateSkill(req, res, next) {
 */
 async function deleteSkill(req, res, next) {
   try {
-    const id = Number(req.params.id);
+    const id = req.skillId;
 
     const deleted = await skillsData.remove(id);
 
-    if (deleted === false) {
+    if (!deleted) {
       return res.status(404).json({
         error: "Skill not found"
       });

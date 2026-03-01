@@ -13,59 +13,52 @@
   </head>
 
   <body>
-    <!-- Create skill form -->
-    <h2>Add skill</h2>
+    <div class="container">
 
-    <!-- 
-      Form used to create a new skill.
-      JS listens to submit event and sends POST /skills
-    -->
-    <form id="skillForm">
-      <input id="titleInput" placeholder="Title (e.g. Node.js)" aria-label="Skill title" />
-      <input id="categoryInput" placeholder="Category (e.g. Backend)" aria-label="Skill category" />
-
-      <!-- Progress is numeric (0..100) -->
-      <input
-        id="progressInput"
-        type="number"
-        min="0"
-        max="100"
-        value="0"
-        aria-label="Skill progress"
-      />
-
-      <!-- Status of the skill -->
-      <select id="statusInput" aria-label="Skill status">
-        <option value="active">active</option>
-        <option value="done">done</option>
-      </select>
-
-      <button type="submit">Add</button>
-    </form>
-
-    <!-- Dashboard + list -->
-    <h3>Skills</h3>
-
-    <!-- Stats are updated dynamically by JS -->
-    <h3 id="stats">Total: 0 | Active: 0 | Done: 0</h3>
-
-    <!-- Filters: category dropdown + search input -->
-    <select id="filterCategory" aria-label="Filter by category">
-      <option value="all">All</option>
-    </select>
-
-    <input id="searchInput" placeholder="Search title..." aria-label="Search by title" />
-
-    <!-- Manual reload button (also loads on page start) -->
-    <button id="loadBtn" type="button">Load</button>
-
-    <!-- Skills list is rendered here by JS -->
-    <ul id="skillsList"></ul>
-
-    <!-- Optional message area (errors / info if you want later) -->
-    <p id="msg"></p>
-
-    <!-- Frontend script (fetch + render + events) -->
-    <script src="./app.js"></script>
+      <!-- Create skill form -->
+      <h2>Add skill</h2>
+      <!-- Form used to create a new skill.
+                  JS listens to submit event and sends POST /skills-->
+      <form id="skillForm">
+        <input id="titleInput" placeholder="Title (e.g. Node.js)" aria-label="Skill title" />
+        <input id="categoryInput" placeholder="Category (e.g. Backend)" aria-label="Skill category" />
+      
+        <!-- Progress is numeric (0..100) -->
+        <input id="progressInput" type="number" min="0" max="100" value="0" aria-label="Skill progress" />
+        
+        <!-- Status of the skill -->
+        <select id="statusInput" aria-label="Skill status">
+          <option value="active">active</option>
+          <option value="done">done</option>
+        </select>
+        
+        <button type="submit">Add</button>
+        </form>
+        
+        <!-- Dashboard + list -->
+        <h3>Skills</h3>
+        
+        <!-- Stats are updated dynamically by JS -->
+        <h3 id="stats">Total: 0 | Active: 0 | Done: 0</h3>
+        
+        <!-- Filters: category dropdown + search input -->
+        <select id="filterCategory" aria-label="Filter by category">
+          <option value="all">All</option>
+        </select>
+        
+        <input id="searchInput" placeholder="Search title..." aria-label="Search by title" />
+        
+        <!-- Manual reload button (also loads on page start) -->
+        <button id="loadBtn" type="button">Load</button>
+        
+        <!-- Skills list is rendered here by JS -->
+        <ul id="skillsList"></ul>
+        
+        <!-- Optional message area (errors / info if you want later) -->
+        <p id="msg"></p>
+        
+        <!-- Frontend script (fetch + render + events) -->
+        <script src="./app.js"></script>
+    </div>
   </body>
 </html>
