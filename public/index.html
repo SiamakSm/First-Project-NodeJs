@@ -1,4 +1,4 @@
-< !doctype html >
+<!doctype html>
     <html lang="en">
         <head>
             <meta charset="utf-8" />
@@ -20,6 +20,12 @@
             </form>
             
             <h3>Skills</h3>
+            <h3 id="stats">Total: 0 | Active: 0 | Done: 0</h3>
+            
+            <select id="filterCategory">
+                <option value="all">All</option>
+            </select>
+            <input id="searchInput" placeholder="Search title..." />
             <button id="loadBtn" type="button">Load</button>
             <ul id="skillsList"></ul>
 

@@ -3,37 +3,86 @@
 
 const API_BASE = "";
 
-//const API_BASE = "http://localhost:4000";
 
-const listEl = document.querySelector("#skillsList");
-const loadBtn = document.querySelector("#loadBtn");
-const form = document.querySelector("#skillForm");
-
-const titleInput = document.querySelector("#titleInput");
-const categoryInput = document.querySelector("#categoryInput");
-const progressInput = document.querySelector("#progressInput");
-const statusInput = document.querySelector("#statusInput");
-
+function get(query) {
+    return document.getElementById(query);
+}
 
 
 //Render
 function renderSkills(skills) {
-    listEl.innerHTML = "";
+    const list = get("skillsList");
+    list.innerHTML = "";
+
+    skills = categoryCollecter(skills);
+
+    const q = get("searchInput").value.trim().toLowerCase();
+    if (q) {
+        skills = skills.filter(s =>
+            s.title.toLowerCase().includes(q)
+        );
+    }
+
+    const total = skills.length;
+    const active = skills.filter(s => s.status === "active").length;
+    const done = skills.filter(s => s.status === "done").length;
+
+    get("stats").textContent =
+        `Total: ${total} | Active: ${active} | Done: ${done}`;
 
     for (const s of skills) {
         const li = document.createElement("li");
-        li.textContent = `${s.id}. ${s.title} -- ${s.category} -- ${s.progress}% -- ${s.status}`;
+      li.classList.add("skill-item");
 
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "Delete";
-        delBtn.addEventListener("click", () => deleteSkill(s.id));
+      li.innerHTML = `
+      <div class="skill-content">
+        <strong>#${s.id} ${s.title}</strong>
 
-        const doneBtn = document.createElement("button");
-        doneBtn.textContent = "Done";
-        doneBtn.addEventListener("click", () => updateSkill(s.id, { status: "done", progress: 100 }));
+        <div class="skill-meta">
+          ${s.category}
+          <span class="badge ${s.status}">
+            ${s.status}
+          </span>
+        </div>
 
-        li.append(" ", doneBtn, " ", delBtn);
-        listEl.appendChild(li);
+        <div class="skill-progress">
+          <div class="progress">
+            <div class="progress-bar" style="width:${s.progress || 0}%"></div>
+          </div>
+          <span class="progress-text">
+            ${s.progress || 0}%
+          </span>
+        </div>
+      </div>
+    `;
+
+      const incBtn = document.createElement("button");
+      incBtn.textContent = "+10%";
+      incBtn.addEventListener("click", () =>
+          updateSkill(s.id, {
+              progress: Math.min((s.progress || 0) + 10, 100),
+              status: s.progress + 10 >= 100 ? "done" : s.status
+          })
+      );
+
+      const doneBtn = document.createElement("button");
+      doneBtn.textContent = "Done";
+      doneBtn.addEventListener("click", () =>
+          updateSkill(s.id, { status: "done", progress: 100 })
+      );
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", () =>
+          deleteSkill(s.id)
+      );
+
+      const actions = document.createElement("div");
+      actions.classList.add("skill-actions");
+      actions.append(incBtn, doneBtn, delBtn);
+
+        li.appendChild(actions);
+        list.appendChild(li);
     };
 };
 
@@ -41,17 +90,17 @@ function renderSkills(skills) {
 //Load (GET /skills)
 async function loadSkills() {
     const res = await fetch(`${API_BASE}/skills`);
-    const data = await res.json();
+    let data = await res.json();
     renderSkills(data);
 };
 
 
 //Add (POST /skills)
 async function addSkill() {
-    const title = titleInput.value.trim();
-    const category = categoryInput.value.trim();
-    const progress = Number(progressInput.value) || 0;
-    const status = statusInput.value;
+    const title = get("titleInput").value.trim();
+    const category = get("categoryInput").value.trim();
+    const progress = Number(get("progressInput").value) || 0;
+    const status = get("statusInput").value;
 
     const res = await fetch(`${API_BASE}/skills`, {
         method: "POST",
@@ -65,10 +114,10 @@ async function addSkill() {
         return;
     };
 
-    titleInput.value = "";
-    categoryInput.value = "";
-    progressInput.value = "0";
-    statusInput.value = "active";
+    get("titleInput").value = "";
+    get("categoryInput").value = "";
+    get("progressInput").value = "0";
+    get("statusInput").value = "active";
 
     await loadSkills();
 };
@@ -106,11 +155,26 @@ async function updateSkill(id, patch) {
 };
 
 
+function categoryCollecter(skills) {
+    const categories = [...new Set(skills.map(s => s.category))];
+    const selected = get("filterCategory").value || "all";
+    get("filterCategory").innerHTML = `<option value="all">All</option>` + categories.map(c => `<option value="${c}">${c}</option>`).join("");
+    get("filterCategory").value = categories.includes(selected) ? selected : "all";
+    const filteredSkills = selected === "all" ? skills : skills.filter(s => s.category === selected);
+    return filteredSkills;
+};
+
+
 // Events
-loadBtn.addEventListener("click", loadSkills);
+get("loadBtn").addEventListener("click", loadSkills);
+get("filterCategory").addEventListener("change", loadSkills);
+get("searchInput").addEventListener("input", loadSkills);
 
-form.addEventListener("submit", async (e) => {
+get("skillForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-
     await addSkill();
 });
+
+
+
+loadSkills();
