@@ -4,11 +4,14 @@ A full-stack skill tracking web application built with **Node.js, Express, Postg
 
 This project demonstrates REST API design, MVC architecture, database integration, and cloud deployment.
 
-🌍 Live Demo:  
+🌍 Live Demo:   (⚠️ Live demo currently offline — screenshots below)
 👉 https://first-project-nodejs-j6gw.onrender.com
 
 ---
 
+<img width="1080" height="368" alt="photo-grid-1x3" src="https://github.com/user-attachments/assets/52fe4f13-8069-4710-8509-d1651426facd" />
+
+---
 ## 🛠 Tech Stack
 
 ### Backend
